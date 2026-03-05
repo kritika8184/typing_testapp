@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+/* Import Sora fonts from assets */
+@font-face {
+    font-family: 'Sora';
+    src: url('./assets/fonts/Sora/static/Sora-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sora';
+    src: url('./assets/fonts/Sora/static/Sora-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sora';
+    src: url('./assets/fonts/Sora/static/Sora-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Alternative: Use variable font (more efficient) */
+@font-face {
+    font-family: 'Sora Variable';
+    src: url('./assets/fonts/Sora/Sora-VariableFont_wght.ttf') format('truetype-variations');
+    font-weight: 100 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@layer base{
+    body{
+        @apply bg-black text-white;
+        font-family: 'Sora', 'Sora Variable', system-ui, -apple-system, sans-serif;
+    }
+}
