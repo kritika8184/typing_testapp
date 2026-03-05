@@ -36,7 +36,17 @@
 
 @layer base{
     body{
-        @apply bg-black text-white;
+        @apply bg-black text-[#ADADAD];
         font-family: 'Sora', 'Sora Variable', system-ui, -apple-system, sans-serif;
+    }
+}
+
+@layer components{
+    .navButton{
+        @apply border-2 rounded-md  mx-2 px-2 hover:cursor-pointer  hover:backdrop-grayscale-25
+    }
+
+    .navButton.active{
+        @apply focus:border-blue-500 text-blue-500
     }
 }
