@@ -1,10 +1,17 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import TypingSpace from "./TypingSpace.jsx";
+import data from "../../data.js";
 const Heading =()=>{
 
     const [difficulty, setDifficulty] = useState("");
     const [mode, setMode] = useState("");
+    const [text, setText] = useState("");
+    const [indexValue, setIndexValue] = useState(0);
 
+    useEffect(()=>{
+        setIndexValue(randomNumber(0,9));
+        setText((data[difficulty.toLowerCase()] && data[difficulty.toLowerCase()][indexValue])?data[difficulty.toLowerCase()][indexValue].text : null);
+    }, [difficulty]);
     const handleDifficultyChange=(e)=>(setDifficulty(e.target.value));
 
     const handleModeChange=(e)=> (setMode(e.target.value));
@@ -31,8 +38,12 @@ const Heading =()=>{
                 </div>
             </header>
             <hr className=""/>
-            <TypingSpace difficulty={difficulty} mode={mode}/>
+            <TypingSpace text={text} mode={mode}/>
         </>
     )
 }
 export default Heading;
+
+const randomNumber=(min, max)=> {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
