@@ -3,18 +3,17 @@ import Restartlogo from "../assets/images/icon-restart.svg";
 
 const TypingSpace = ({text, mode}) => {
     const [userInput, setUserInput] = useState("");
+    const [getStarted, setGetStarted] = useState(false);
     const textareaRef =useRef(null);
 
     const handleChange = (e) => {
         if(e.target.value.length>text.length) return;
         setUserInput(e.target.value)
     };
-    const handleReset =() =>{
-        setUserInput("")
-    }
+
     return (
         <>
-            {text ? (
+            {text && (
                 <>
                     <div className="w-full cursor-text"
                          onClick={() => textareaRef.current.focus()}
@@ -47,15 +46,22 @@ const TypingSpace = ({text, mode}) => {
                         autoFocus
                     />
                 </>
-            ) : (
-                <>Please select the typing difficulty</>
             )}
-            <div className="flex justify-center items-end absolute bottom-2 right-[50%]">
-                <button className="flex items-center border-2 gap-2 hover:cursor-pointer hover:bg-blue-500 rounded-md p-2" onClick={handleReset}>
-                    Restart Test
-                    <img src={Restartlogo} alt={"Restart-button"}/>
-                </button>
-            </div>
+            {!getStarted && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-white/40">
+                    <div className={"flex flex-col items-center gap-4"}>
+                    <button
+                        className="rounded-md bg-blue-500 text-white px-5 py-3 text-sm hover:bg-blue-600"
+                        onClick={() => setGetStarted(true)}
+                    >
+                        Start Typing Test
+                    </button>
+                        <p className="text-gray-300 text-sm">
+                            Or click the text and start typing
+                        </p>
+                    </div>
+                </div>
+            )}
         </>
     )
 }

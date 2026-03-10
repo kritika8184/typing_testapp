@@ -1,20 +1,41 @@
 import {useState, useEffect} from 'react';
 import TypingSpace from "./TypingSpace.jsx";
 import data from "../../data.js";
+import Restartlogo from "../assets/images/icon-restart.svg";
 const Heading =()=>{
-
-    const [difficulty, setDifficulty] = useState("");
-    const [mode, setMode] = useState("");
+    const targetTime =  1*60*1000;
+    const [difficulty, setDifficulty] = useState("Easy");
+    const [mode, setMode] = useState("timed");
     const [text, setText] = useState("");
     const [indexValue, setIndexValue] = useState(0);
+    const [userInput, setUserInput] = useState("");
+    const [restart, setRestart] = useState();
+
 
     useEffect(()=>{
-        setIndexValue(randomNumber(0,9));
+        // setIndexValue(randomNumber(0,9));
         setText((data[difficulty.toLowerCase()] && data[difficulty.toLowerCase()][indexValue])?data[difficulty.toLowerCase()][indexValue].text : null);
-    }, [difficulty]);
+    }, [difficulty, indexValue]);
     const handleDifficultyChange=(e)=>(setDifficulty(e.target.value));
 
     const handleModeChange=(e)=> (setMode(e.target.value));
+
+    const handleReset =() =>{
+        setIndexValue(randomNumber(0,9));
+        setUserInput("");
+    }
+
+    const countDown =(timerMin)=>{
+        const diff = targetTime - Date.now();
+
+        if(diff<=0){
+            setTimeLeft(0);
+            cancelAnimationFrame(requestRef.current);
+            return;
+        }
+        setTimeLeft(diff);
+        requestRef.current = requestAnimationFrame
+    }
     return(
         <>
             <header className="flex m-4 justify-between text-xs">
@@ -38,7 +59,13 @@ const Heading =()=>{
                 </div>
             </header>
             <hr className=""/>
-            <TypingSpace text={text} mode={mode}/>
+                <div className="fixed bottom-2 right-1/2">
+                    <button className="flex items-center border-2 gap-2 hover:cursor-pointer hover:bg-blue-500 rounded-md p-2 text-xs" onClick={handleReset}>
+                        Restart Test
+                        <img src={Restartlogo} alt={"Restart-button"} className="w-4 h-4"/>
+                    </button>
+            </div>
+            <TypingSpace text={text} mode={mode} userInput={userInput} setUserInput={setUserInput}/>
         </>
     )
 }
